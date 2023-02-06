@@ -1,6 +1,6 @@
-export function ImageGalleryItem() {
-  <li class="gallery-item">
-      <div>VOVOVOVOVOVOVOVO</div>
-  {/* <img src="https://i1.sndcdn.com/avatars-000740154184-mzbr3f-t500x500.jpg" alt="pinkcream" /> */}
-</li>
+export function ImageGalleryItem({item:{webformatURL,tags}}) {
+return(  <li className="gallery-item">
+    <img src={webformatURL}
+        alt={tags} />
+</li>)
 }
