@@ -40,7 +40,8 @@ if (
   
   fetch(`https://pixabay.com/api/?q=${this.state.query}&page=${this.state.page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`)
        .then(res => res.json())
-       .then(images => this.setState({images }))
+    .then(images => this.setState({ images:[...images.hits] }))
+       
   
 }
   }
@@ -52,8 +53,7 @@ if (
     return (
     <div>
     <Searchbar onSubmit ={this.handleFormSubmit} />
-    <ImageGallery items={images} /> 
-  
+    {images.length>0 && <ImageGallery items={images}/>}
       </div>
   )}
 };
