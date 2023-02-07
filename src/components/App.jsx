@@ -56,7 +56,7 @@ if (
   
 render() {
 
-  const { images, page } = this.state;
+  const { images } = this.state;
     
     return (
     <div>
