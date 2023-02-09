@@ -63,6 +63,12 @@ if (
   }
 }
 
+  // handleBackdropClick = e => {
+  //       if (e.currentTarget === e.target) {
+  //           this.setState({largeImage: ''}) 
+  //       }
+  //   };
+
 // toggleModal = ()=>{
 //   this.setState(({showModal}) => ({
 //     showModal: !showModal
@@ -98,7 +104,7 @@ render() {
         
         {images.length > 0 && <ImageGallery items={images} onClick={this.openModal} />}
         {images.length > 11 && <Button onClick={this.loadMore} />}
-        {largeImage.length > 0 && ( <Modal image ={largeImage} onClick={this.closeModal} />)}
+        {largeImage.length > 0 && ( <Modal image ={largeImage}  />)}
     </div>
   )}
 };

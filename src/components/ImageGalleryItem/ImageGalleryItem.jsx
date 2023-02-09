@@ -3,8 +3,10 @@ export function ImageGalleryItem({
     onClick,
 }) {
 return(  
-<li className="gallery-item" onClick={()=>onClick(largeImageURL)}>
-    <img src={webformatURL}
-         alt={tags} />
+<li
+        className="gallery-item"
+        onClick={() => onClick(largeImageURL)}>
+    
+        <img src={webformatURL} alt={tags} />
 </li>)
 }
