@@ -1,10 +1,16 @@
 import { Component } from "react";
 import { Overlay } from "./Modal.styled";
-import {createPortal} from 'react-dom'
+import { createPortal } from 'react-dom'
+import PropTypes from 'prop-types'
 
 const modalRoot = document.querySelector('#modal-root')
 
 export class Modal extends Component{
+  
+static propTypes = {
+    image: PropTypes.string.isRequired,
+    onClose: PropTypes.func.isRequired,
+  };
 
 componentDidMount() {
     window.addEventListener('keydown',this.handleKeydown)
@@ -29,6 +35,7 @@ handleBackdropClick = e => {
 
 render(){
    const {image} = this.props
+    
     return createPortal(
         <Overlay onClick={this.handleBackdropClick}>
             <div>
@@ -39,5 +46,6 @@ render(){
 );
     }
 }
+
 
 

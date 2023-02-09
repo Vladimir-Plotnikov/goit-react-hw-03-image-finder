@@ -4,10 +4,9 @@ import { Searchbar } from "./Searchbar/Searchbar";
 import { Button } from "./Button/Button";
 import { Hearts } from "react-loader-spinner";
 import { Modal } from "./Modal/Modal";
+import { Wrapper } from "./App.styled";
 
 const API_KEY = '8741960-90c2aa3d050b5b3c6133ae158';
-// const API_PAGE = this.state.page;
-// const API_QUERY = this.state.query;
 
 export class App extends Component{
 
@@ -17,7 +16,6 @@ state = {
     images: [],
     loading: false,
     largeImage: '',
-    // showModal: false
 }
   
 
@@ -63,18 +61,6 @@ if (
   }
 }
 
-  // handleBackdropClick = e => {
-  //       if (e.currentTarget === e.target) {
-  //           this.setState({largeImage: ''}) 
-  //       }
-  //   };
-
-// toggleModal = ()=>{
-//   this.setState(({showModal}) => ({
-//     showModal: !showModal
-//   }))
-// }
-
 openModal = image => {
 this.setState({largeImage: image})  
 }
@@ -88,7 +74,7 @@ render() {
   const { images, loading, largeImage } = this.state;
     
     return (
-    <div>
+    <Wrapper>
     <Searchbar onSubmit={this.handleFormSubmit} />
         
         {loading &&
@@ -105,6 +91,6 @@ render() {
         {images.length > 0 && <ImageGallery items={images} onClick={this.openModal} />}
         {images.length > 11 && <Button onClick={this.loadMore} />}
         {largeImage.length > 0 && ( <Modal image ={largeImage} onClose={this.closeModal} />)}
-    </div>
+    </Wrapper>
   )}
 };
