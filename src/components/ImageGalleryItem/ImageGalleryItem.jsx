@@ -1,6 +1,10 @@
-export function ImageGalleryItem({item:{webformatURL,tags}}) {
-return(  <li className="gallery-item">
+export function ImageGalleryItem({
+    item: { webformatURL, largeImageURL, tags },
+    onClick,
+}) {
+return(  
+<li className="gallery-item" onClick={()=>onClick(largeImageURL)}>
     <img src={webformatURL}
-        alt={tags} />
+         alt={tags} />
 </li>)
 }
