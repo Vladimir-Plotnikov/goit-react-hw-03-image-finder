@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { Overlay } from "./Modal.styled";
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 
 
 export class Modal extends Component{
