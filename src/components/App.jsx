@@ -4,9 +4,11 @@ import { Searchbar } from "./Searchbar/Searchbar";
 import { Button } from "./Button/Button";
 import { Hearts } from "react-loader-spinner";
 import { Modal } from "./Modal/Modal";
-import { Wrapper } from "./App.styled";
+import { searchImages } from "services/API";
 
-const API_KEY = '8741960-90c2aa3d050b5b3c6133ae158';
+import { Wrapper, HeartsWrapper, ShitySearch } from "./App.styled";
+
+// const API_KEY = '8741960-90c2aa3d050b5b3c6133ae158';
 
 export class App extends Component{
 
@@ -16,6 +18,8 @@ state = {
     images: [],
     loading: false,
     largeImage: '',
+    total:0,
+    status:'empty'
 }
   
 
@@ -45,18 +49,27 @@ handleFormSubmit = e => {
   }
 
 componentDidUpdate(prevProps, prevState) {
-
 if (
   prevState.page !== this.state.page ||
   prevState.query !== this.state.query
 ) {
 
   this.setState({loading:true})
-  
-  fetch(`https://pixabay.com/api/?q=${this.state.query}&page=${this.state.page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`)
-    .then(res => res.json())
-    .then(images => this.setState({ images: [...images.hits] }))
-    .then(() => this.setState({ loading: false }))
+  searchImages({ query: this.state.query, page: this.state.page })
+    .then(({ totalHits, hits }) => {
+      if (totalHits) {
+        this.setState(prevState => ({
+          images: [...prevState.images, ...hits],
+          total: totalHits,
+          status: 'wellDone',
+        }))
+      } else {
+        this.setState(
+          {status: 'fail'}
+        )
+      }
+    }).then(() => this.setState({ loading: false }))
+    .catch(error => this.setState({ error, status: 'fail' }))
        
   }
 }
@@ -70,27 +83,45 @@ this.setState({largeImage: ''})
 }
   
 render() {
-
-  const { images, loading, largeImage } = this.state;
-    
+  const { images, loading, largeImage, total, status, query, page } = this.state;
+  const totalPage = total / (page * images.length); 
+  if (status==='empty') {
     return (
-    <Wrapper>
+      <Wrapper>
+      <Searchbar onSubmit={this.handleFormSubmit} />
+      <h1>TRY TO <ShitySearch>SEARCH</ShitySearch> SOMETHING!</h1>
+      </Wrapper>
+  )
+  }
+  if (status === 'fail') {
+    return (
+      <Wrapper>
+      <Searchbar onSubmit={this.handleFormSubmit} />
+      <h1>Nothing with <ShitySearch>{query}</ShitySearch> i could find!</h1>
+      </Wrapper> )
+  }
+  if (status === 'wellDone') {
+    return (
+      <Wrapper>
     <Searchbar onSubmit={this.handleFormSubmit} />
-        
+       <HeartsWrapper>
         {loading &&
-          <Hearts 
-            height="80"
-            width="80"
-            color="#4fa94d"
+            <Hearts 
+            height="300"
+            width="300"
+            color="#3f51b5"
             ariaLabel="hearts-loading"
             wrapperStyle={{}}
             wrapperClass=""
             visible={true}
           />}
-        
+        </HeartsWrapper> 
         {images.length > 0 && <ImageGallery items={images} onClick={this.openModal} />}
-        {images.length > 11 && <Button onClick={this.loadMore} />}
+        {totalPage>1 && <Button onClick={this.loadMore} />}
         {largeImage.length > 0 && ( <Modal image ={largeImage} onClose={this.closeModal} />)}
-    </Wrapper>
-  )}
+    </Wrapper>)
+    
+  }
+}
 };
+ 
