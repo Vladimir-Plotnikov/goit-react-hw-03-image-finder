@@ -8,8 +8,6 @@ import { searchImages } from "services/API";
 
 import { Wrapper, HeartsWrapper, ShitySearch } from "./App.styled";
 
-// const API_KEY = '8741960-90c2aa3d050b5b3c6133ae158';
-
 export class App extends Component{
 
 state = {

@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types'
-import { func } from 'prop-types'
 import { ImageGalleryItemWrapper } from "./ImmageGalleryItem.styled"
 
 export function ImageGalleryItem({
@@ -23,5 +22,5 @@ ImageGalleryItem.protoTypes = {
     src: PropTypes.string.isRequired,
     largeImageURL: PropTypes.string.isRequired,
     alt: PropTypes.string.isRequired,
-    onClick: func.isRequired
+    onClick: PropTypes.func.isRequired
 }
